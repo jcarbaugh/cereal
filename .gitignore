@@ -1,0 +1,17 @@
+*.db
+*.pyc
+*.sqlite3
+*~
+*.bak
+*.swp
+*.egg-info*
+
+.cache/
+.tox/
+_build/
+build/
+dist/
+media/
+
+.coverage
+coverage_html_report
