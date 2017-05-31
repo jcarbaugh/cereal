@@ -72,14 +72,14 @@ class BaseSerializer():
         elif isinstance(value, (list, tuple, set)):
             return list(self._serialize_value(v) for v in value)
         else:
-            return f'{value}'
+            return '{}'.format(value)
 
     def _serializer_method(self, name):
-        return f'serialize_{name}'
+        return 'serialize_{}'.format(name)
 
     def add_handler(self, _type, handler):
         if not callable(handler):
-            raise ValueError(f'handler must be callable')
+            raise ValueError('handler must be callable')
         self.handlers[_type] = handler
 
     def serialize(self, obj):
