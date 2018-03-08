@@ -20,7 +20,6 @@ def datadict():
 
 
 class DictSerializer(cereal.Serializer):
-    exclude = ('id',)
     title = cereal.Field()
     content = cereal.Field()
     created = cereal.Field()
@@ -30,15 +29,15 @@ class DictSerializer(cereal.Serializer):
 
 
 def test_exclude(datadict):
-    data = DictSerializer().serialize(datadict)
+    data = DictSerializer().to_dict(datadict)
     assert 'id' not in data
 
 
 def test_serializer_method(datadict):
-    data = DictSerializer().serialize(datadict)
+    data = DictSerializer().to_dict(datadict)
     assert 'A TITLE' == data['title']
 
 
 def test_datetime(datadict):
-    data = DictSerializer().serialize(datadict)
+    data = DictSerializer().to_dict(datadict)
     assert datadict['created'].isoformat() == data['created']
