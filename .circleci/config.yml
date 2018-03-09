@@ -1,25 +1,26 @@
 version: 2
+shared: &shared
+  working_directory: ~/cereal
+  steps:
+    - checkout
+    - run:
+        command: |
+          sudo pip install pipenv
+          pipenv install
+    - run:
+        command: |
+          pytest tests --ds=tests.testapp.settings
+
 jobs:
-  build:
-    working_directory: ~/cereal
+  "python-3.6":
+    <<: *shared
     docker:
       - image: circleci/python:3.6.4
         environment:
           PIPENV_VENV_IN_PROJECT: true
-    steps:
-      - checkout
-      - restore_cache:
-          key: deps1-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
-      - run:
-          command: |
-            sudo pip install pyenv
-            pyenv global 3.5.2 3.6.0
-            sudo pip install pipenv
-            pipenv install
-      - save_cache:
-          key: deps1-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
-          paths:
-            - "venv"
-      - run:
-          command: |
-            tox
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - "python-3.6"
