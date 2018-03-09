@@ -12,6 +12,7 @@ jobs:
           key: deps1-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
       - run:
           command: |
+            sudo pip install pyenv
             pyenv global 3.5.2 3.6.0
             sudo pip install pipenv
             pipenv install
