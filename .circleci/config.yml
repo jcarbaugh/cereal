@@ -6,7 +6,7 @@ shared: &shared
     - run:
         command: |
           sudo pip install pipenv tox
-          pipenv install
+          pipenv install --python `which python`
     - run:
         command: |
           pipenv run tox
@@ -25,4 +25,5 @@ workflows:
   version: 2
   build:
     jobs:
+      - "python-3.5"
       - "python-3.6"
