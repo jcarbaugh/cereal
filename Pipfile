@@ -19,5 +19,3 @@ tox = "<2.8,>=2.7"
 
 
 [requires]
-
-python_version = "3.6"
