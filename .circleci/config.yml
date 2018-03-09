@@ -5,22 +5,25 @@ shared: &shared
     - checkout
     - run:
         command: |
-          sudo pip install pipenv
+          sudo pip install pipenv tox
           pipenv install
     - run:
         command: |
-          pipenv run pytest tests --ds=tests.testapp.settings
+          pipenv run tox
 
 jobs:
+  "python-3.5":
+    <<: *shared
+    docker:
+      - image: circleci/python:3.5.5
   "python-3.6":
     <<: *shared
     docker:
       - image: circleci/python:3.6.4
-        environment:
-          PIPENV_VENV_IN_PROJECT: true
 
 workflows:
   version: 2
   build:
     jobs:
+      - "python-3.5"
       - "python-3.6"

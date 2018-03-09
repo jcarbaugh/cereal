@@ -14,7 +14,7 @@ Cereal is available on [PyPI](https://pypi.org/project/cereal):
 pip install cereal
 ```
 
-or 
+or
 
 ```shell
 pipenv install cereal
@@ -26,7 +26,7 @@ pipenv install cereal
 
 ### Fields
 
-If you've ever used Django's [ModelForms](https://docs.djangoproject.com/en/2.0/topics/forms/modelforms/), Cereal should seem fairly familiar to you. A Serializer defines a set of attributes (Fields) that will be… serialized… into JSON. 
+If you've ever used Django's [ModelForms](https://docs.djangoproject.com/en/2.0/topics/forms/modelforms/), Cereal should seem fairly familiar to you. A Serializer defines a set of attributes (Fields) that will be… serialized… into JSON.
 
 ```python
 import cereal
@@ -59,7 +59,7 @@ import cereal
 
 class ArticleSerializer(cereal.Serializer):
     title = cereal.Field()
-    
+
     def serialize_title(self, obj):
         return obj['title'].upper()
 
@@ -86,7 +86,7 @@ import cereal
 
 class AuthorSerializer(cereal.Serializer):
     full_name = cereal.Field()
-    
+
     def serialize_full_name(self, obj):
         return f"{obj['first_name']} {obj['last_name']}"
 
@@ -196,7 +196,7 @@ EventSerializer().serialize(data)
 
 ### Custom type handlers
 
-As with dates, other data types outside of what is natively supported by JSON need to be converted to one of the native types during serialization. Cereal allows you to define handlers for additional data types to convert to a valid JSON format. The handler is a callable that recieves the value and returns a value corresponding to a native JSON type. 
+As with dates, other data types outside of what is natively supported by JSON need to be converted to one of the native types during serialization. Cereal allows you to define handlers for additional data types to convert to a valid JSON format. The handler is a callable that receives the value and returns a value corresponding to a native JSON type.
 
 ```python
 import uuid
@@ -204,7 +204,7 @@ import cereal
 
 def uuid_handler(u):
     return u.hex
-    
+
 class UUIDSerializer(cereal.Serializer):
     id = cereal.Field()
 
@@ -300,9 +300,9 @@ class PostSerializer(cereal.Serializer):
 
     class Meta:
         model = Post
-        
+
 post = Post.objects.create(title='Breaking News')
-PostSerializer().serialize(post) 
+PostSerializer().serialize(post)
 ```
 
 ```json
