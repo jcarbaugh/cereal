@@ -1,0 +1,29 @@
+version: 2
+shared: &shared
+  working_directory: ~/cereal
+  steps:
+    - checkout
+    - run:
+        command: |
+          sudo pip install pipenv tox
+          pipenv install
+    - run:
+        command: |
+          pipenv run tox
+
+jobs:
+  "python-3.5":
+    <<: *shared
+    docker:
+      - image: circleci/python:3.5.5
+  "python-3.6":
+    <<: *shared
+    docker:
+      - image: circleci/python:3.6.4
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - "python-3.5"
+      - "python-3.6"

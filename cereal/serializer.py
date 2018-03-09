@@ -17,22 +17,22 @@ class SerializerMetaclass(type):
     def __new__(celf, name, bases, attrs):
 
         exclude_fields = attrs.pop('exclude', None) or []
-
         defined_fields = []
+        model_fields = []
 
         for k, v in list(attrs.items()):
             if isinstance(v, Field):
                 defined_fields.append((k, v))
                 attrs.pop(k)
 
-        model_fields = []
-        model_class = attrs.pop('model', None)
-
-        if model_class:
-            for field in model_class._meta.fields:
-                name = field.name
-                if name not in exclude_fields and name not in defined_fields:
-                    model_fields.append(name)
+        meta_cls = attrs.pop('Meta', None)
+        if meta_cls:
+            model_class = getattr(meta_cls, 'model', None)
+            if model_class:
+                for field in model_class._meta.fields:
+                    name = field.name
+                    if name not in exclude_fields and name not in defined_fields:
+                        model_fields.append(name)
 
         attrs['exclude_fields'] = exclude_fields
         attrs['defined_fields'] = OrderedDict(defined_fields)
@@ -59,6 +59,7 @@ class BaseSerializer():
         self.handlers = {
             datetime.date: datetime_handler,
             datetime.datetime: datetime_handler,
+            datetime.time: datetime_handler,
         }
 
     def _serialize_value(self, value):
@@ -82,7 +83,7 @@ class BaseSerializer():
             raise ValueError('handler must be callable')
         self.handlers[_type] = handler
 
-    def serialize(self, obj):
+    def to_dict(self, obj):
 
         data = {}
 
@@ -123,8 +124,8 @@ class BaseSerializer():
 
         return data
 
-    def serialize_json(self, obj):
-        data = self.serialize(obj)
+    def serialize(self, obj):
+        data = self.to_dict(obj)
         return json.dumps(data)
 
 
