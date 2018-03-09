@@ -9,7 +9,7 @@ shared: &shared
           pipenv install
     - run:
         command: |
-          pytest tests --ds=tests.testapp.settings
+          pipenv run pytest tests --ds=tests.testapp.settings
 
 jobs:
   "python-3.6":
