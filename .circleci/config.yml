@@ -5,19 +5,21 @@ shared: &shared
     - checkout
     - run:
         command: |
-          sudo pip install pipenv tox
+          sudo pip install pipenv
           pipenv install --dev
     - run:
         command: |
           pipenv run tox
-          pytest --cov-report xml --cov=cereal tests --ds=tests.testapp.settings
-          coverage html
 jobs:
   "python-3.5":
     <<: *shared
     docker:
       - image: circleci/python:3.5.5
   "python-3.6":
+    <<: *shared
+    docker:
+      - image: circleci/python:3.6.4
+  "coverage":
     <<: *shared
     docker:
       - image: circleci/python:3.6.4
