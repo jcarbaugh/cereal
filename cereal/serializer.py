@@ -31,7 +31,8 @@ class SerializerMetaclass(type):
             if model_class:
                 for field in model_class._meta.fields:
                     name = field.name
-                    if name not in exclude_fields and name not in defined_fields:
+                    if name not in exclude_fields and \
+                            name not in defined_fields:
                         model_fields.append(name)
 
         attrs['exclude_fields'] = exclude_fields

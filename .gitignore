@@ -8,6 +8,7 @@
 
 .cache/
 .tox/
+.venv/
 _build/
 build/
 dist/

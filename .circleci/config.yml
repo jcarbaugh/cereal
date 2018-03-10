@@ -6,11 +6,14 @@ shared: &shared
     - run:
         command: |
           sudo pip install pipenv tox
-          pipenv install
+          pipenv install --dev
     - run:
         command: |
           pipenv run tox
-
+    - run:
+        command: 
+          pytest --cov-report xml --cov=cereal tests --ds=tests.testapp.settings
+          coverage html
 jobs:
   "python-3.5":
     <<: *shared
