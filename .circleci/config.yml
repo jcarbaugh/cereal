@@ -10,8 +10,6 @@ shared: &shared
     - run:
         command: |
           pipenv run tox
-    - run:
-        command: 
           pytest --cov-report xml --cov=cereal tests --ds=tests.testapp.settings
           coverage html
 jobs:
