@@ -23,10 +23,21 @@ jobs:
     <<: *shared
     docker:
       - image: circleci/python:3.6.4
-
+    steps:
+      - checkout
+      - run:
+          command: |
+            sudo pip install pipenv
+            pipenv install --dev
+      - run:
+          command: |
+            pipenv run pytest --cov-report html --cov=cereal tests --ds=tests.testapp.settings
+      - store_artifacts:
+          path: htmlcov
 workflows:
   version: 2
   build:
     jobs:
       - "python-3.5"
       - "python-3.6"
+      - "coverage"
