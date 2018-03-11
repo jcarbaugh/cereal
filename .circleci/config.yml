@@ -31,7 +31,9 @@ jobs:
             pipenv install --dev
       - run:
           command: |
-            pipenv run pytest --cov-report html --cov=cereal tests --ds=tests.testapp.settings
+            pipenv run pytest --cov-report html --cov=cereal tests --junit-xml=reports/results.xml --ds=tests.testapp.settings
+      - store_test_results:
+          path: reports
       - store_artifacts:
           path: htmlcov
 workflows:
