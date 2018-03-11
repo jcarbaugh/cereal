@@ -94,23 +94,24 @@ def test_serializer_field_list():
     assert data['foo'][1]['foo'] == 'baz'
 
 
-# def test_serializer_field_m2m(db):
-#
-#     class CommentSerializer(cereal.Serializer):
-#         model = Comment
-#
-#     class PostSerializer(cereal.Serializer):
-#         model = Post
-#         comments = cereal.SerializerField(CommentSerializer)
-#
-#     obj = Post.objects.create(title='TITLE', content='CONTENT')
-#     Comment.objects.create(username='j', post=obj)
-#     Comment.objects.create(username='c', post=obj)
-#     obj.refresh_from_db()
-#
-#     print(obj.comments)
-#
-#     data = PostSerializer().serialize(obj)
-#
-#     assert data['title'] == 'TITLE'
-#     assert data['comments'] == 'comments'
+def test_serializer_field_m2m(db):
+
+    class CommentSerializer(cereal.Serializer):
+        class Meta:
+            model = Comment
+
+    class PostSerializer(cereal.Serializer):
+        comments = cereal.SerializerField(CommentSerializer)
+        class Meta:
+            model = Post
+
+    obj = Post.objects.create(title='TITLE', content='CONTENT')
+    Comment.objects.create(username='j', post=obj)
+    Comment.objects.create(username='c', post=obj)
+    obj.refresh_from_db()
+
+    data = PostSerializer().to_dict(obj)
+
+    assert data['title'] == 'TITLE'
+    assert len(data['comments']) == 2
+    assert data['comments'][0]['username'] == 'j'

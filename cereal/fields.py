@@ -31,8 +31,8 @@ class SerializerField(Field):
         other = get_attribute_or_key(obj, name)
         if isinstance(other, (list, tuple, set)):
             return [self._serializer.to_dict(o) for o in other]
-        elif hasattr(other, 'objects'):
-            return [self._serializer.to_dict(o) for o in other.objects.all()]
+        elif hasattr(other, '_queryset_class'):
+            return [self._serializer.to_dict(o) for o in other.all()]
         return self._serializer.to_dict(other)
 
 

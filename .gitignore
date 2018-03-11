@@ -7,11 +7,14 @@
 *.egg-info*
 
 .cache/
+.pytest_cache/
 .tox/
 .venv/
 _build/
 build/
 dist/
+htmlcov/
+reports/
 media/
 
 .coverage

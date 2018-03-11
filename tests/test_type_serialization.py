@@ -1,6 +1,8 @@
 import datetime
 import json
 
+import pytest
+
 import cereal
 
 
@@ -122,6 +124,13 @@ def test_custom_serialization():
     data = ser.to_dict(obj)
 
     assert data['value'] == 'custom'
+
+
+def test_custom_noncallable():
+    obj = ValueClass(cereal)
+    ser = ValueSerializer()
+    with pytest.raises(ValueError):
+        ser.add_handler(cereal, "")
 
 
 def test_unhandled_serialization():
