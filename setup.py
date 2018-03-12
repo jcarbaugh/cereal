@@ -4,10 +4,10 @@ long_description = open('README.md').read()
 
 setup(
     name="cereal",
-    version='0.1.0',
+    version='0.3.0',
     packages=["cereal"],
     include_package_data=True,
-    description="A simple object and Django model serializer",
+    description="A simple object and Django model JSON serializer",
     url="https://github.com/istrategylabs/cereal",
     author="Jeremy Carbaugh",
     author_email="jeremy@isl.co",
