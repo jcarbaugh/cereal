@@ -116,9 +116,9 @@ The examples so far have involved serializing a dict to JSON, but the *json* mod
 import cereal
 
 class Article:
-	def __init__(self, _id, title):
-	    self.id = _id
-	    self.title = title
+    def __init__(self, _id, title):
+        self.id = _id
+        self.title = title
 
 class ArticleSerializer(cereal.Serializer):
     title = cereal.Field()
@@ -263,7 +263,7 @@ from itertools import count
 import cereal
 
 class ThingSerializer(cereal.Serializer):
-	id = cereal.Field()
+    id = cereal.Field()
     offset = cereal.IteratorField(count())
 
 ser = ThingSerializer()
