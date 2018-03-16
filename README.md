@@ -1,5 +1,7 @@
 # Cereal
 
+[![CircleCI](https://circleci.com/gh/istrategylabs/cereal.svg?style=svg)](https://circleci.com/gh/istrategylabs/cereal)
+
 Serialize objects, dicts, and [Django models](https://djangoproject.com)  to JSON with ease.
 
 I occasionally need to make very small APIs, maybe just an endpoint or two to provide a bit of data to a client. It always seems like overkill to use Django REST framework when a simple View will do. Unfortunately, the DRF serializer is really good and hand coding an object-to-JSON map can be fragile and gross. Cereal was created to be that trusty serializer when that's all you need.
