@@ -4,7 +4,7 @@ long_description = open('README.md').read()
 
 setup(
     name="cereal",
-    version='0.3.0',
+    version='1.0',
     packages=["cereal"],
     include_package_data=True,
     description="A simple object and Django model JSON serializer",
@@ -13,6 +13,7 @@ setup(
     author_email="jeremy@isl.co",
     license='BSD',
     long_description=long_description,
+    long_description_content_type="text/markdown",
     platforms=["any"],
     classifiers=[
         "Development Status :: 4 - Beta",
