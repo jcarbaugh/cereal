@@ -29,15 +29,15 @@ class DictSerializer(cereal.Serializer):
 
 
 def test_exclude(datadict):
-    data = DictSerializer().to_dict(datadict)
+    data = DictSerializer().asdict_(datadict)
     assert 'id' not in data
 
 
 def test_serializer_method(datadict):
-    data = DictSerializer().to_dict(datadict)
+    data = DictSerializer().asdict_(datadict)
     assert 'A TITLE' == data['title']
 
 
 def test_datetime(datadict):
-    data = DictSerializer().to_dict(datadict)
+    data = DictSerializer().asdict_(datadict)
     assert datadict['created'].isoformat() == data['created']

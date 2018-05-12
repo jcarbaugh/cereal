@@ -28,17 +28,17 @@ class PostSerializer(cereal.Serializer):
 
 
 def test_exclude(post):
-    data = PostSerializer().to_dict(post)
+    data = PostSerializer().asdict_(post)
     assert 'id' not in data
 
 
 def test_serializer_method(post):
-    data = PostSerializer().to_dict(post)
+    data = PostSerializer().asdict_(post)
     assert 'A TITLE' == data['title']
 
 
 def test_datetime(post):
     dt = datetime.datetime.now()
     post.created = dt
-    data = PostSerializer().to_dict(post)
+    data = PostSerializer().asdict_(post)
     assert dt.isoformat() == data['created']

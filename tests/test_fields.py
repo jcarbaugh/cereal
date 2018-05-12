@@ -8,7 +8,7 @@ def test_field():
     class FieldSerializer(cereal.Serializer):
         foo = cereal.Field()
 
-    data = FieldSerializer().to_dict(None)
+    data = FieldSerializer().asdict_(None)
     assert data['foo'] is None
 
 
@@ -19,7 +19,7 @@ def test_constant_field():
     class ConstantSerializer(cereal.Serializer):
         foo = cereal.ConstantField(value)
 
-    data = ConstantSerializer().to_dict(None)
+    data = ConstantSerializer().asdict_(None)
     assert data['foo'] == value
 
 
@@ -36,10 +36,10 @@ def test_iterator_generator_field():
 
     ser = IteratorSerializer()
 
-    data = ser.to_dict(None)
+    data = ser.asdict_(None)
     assert data['foo'] == 0
 
-    data = ser.to_dict(None)
+    data = ser.asdict_(None)
     assert data['foo'] == 1
 
 
@@ -50,10 +50,10 @@ def test_iterator_list_field():
 
     ser = IteratorSerializer()
 
-    data = ser.to_dict(None)
+    data = ser.asdict_(None)
     assert data['foo'] == 0
 
-    data = ser.to_dict(None)
+    data = ser.asdict_(None)
     assert data['foo'] is None
 
 
@@ -70,7 +70,7 @@ def test_serializer_field():
         foo = cereal.SerializerField(InnerSerializer)
 
     obj = ClassyClass(foo=ClassyClass(foo='bar'))
-    data = OuterSerializer().to_dict(obj)
+    data = OuterSerializer().asdict_(obj)
     assert isinstance(data['foo'], dict)
     assert data['foo']['foo'] == 'bar'
 
@@ -88,7 +88,7 @@ def test_serializer_field_list():
         foo = cereal.SerializerField(InnerSerializer)
 
     obj = ClassyClass(foo=[ClassyClass(foo='bar'), ClassyClass(foo='baz')])
-    data = OuterSerializer().to_dict(obj)
+    data = OuterSerializer().asdict_(obj)
     assert isinstance(data['foo'], list)
     assert data['foo'][0]['foo'] == 'bar'
     assert data['foo'][1]['foo'] == 'baz'

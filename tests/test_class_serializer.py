@@ -34,17 +34,17 @@ class JustAClass():
 
 
 def test_exclude(instance):
-    data = ClassSerializer().to_dict(instance)
+    data = ClassSerializer().asdict_(instance)
     assert 'id' not in data
 
 
 def test_serializer_method(instance):
-    data = ClassSerializer().to_dict(instance)
+    data = ClassSerializer().asdict_(instance)
     assert 'A TITLE' == data['title']
 
 
 def test_datetime(instance):
     dt = datetime.datetime.now()
     instance.created = dt
-    data = ClassSerializer().to_dict(instance)
+    data = ClassSerializer().asdict_(instance)
     assert dt.isoformat() == data['created']

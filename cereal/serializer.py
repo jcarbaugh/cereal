@@ -83,7 +83,7 @@ class BaseSerializer():
             raise ValueError('handler must be callable')
         self.handlers[_type] = handler
 
-    def to_dict(self, obj):
+    def asdict_(self, obj):
 
         data = {}
 
@@ -125,7 +125,7 @@ class BaseSerializer():
         return data
 
     def serialize(self, obj):
-        data = self.to_dict(obj)
+        data = self.asdict_(obj)
         return json.dumps(data)
 
 
