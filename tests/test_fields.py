@@ -1,6 +1,7 @@
 import cereal
-import pytest  # noqa
-from tests.testapp.models import Post, Comment
+import pytest
+import sys
+# from tests.testapp.models import Post, Comment
 
 
 def test_field():
@@ -12,6 +13,8 @@ def test_field():
     assert data['foo'] is None
 
 
+@pytest.mark.skipif(sys.version_info < (3, 6),
+                    reason="requires python3.6")
 def test_annotated_field():
 
     class FieldSerializer(cereal.Serializer):
