@@ -12,6 +12,15 @@ def test_field():
     assert data['foo'] is None
 
 
+def test_annotated_field():
+
+    class FieldSerializer(cereal.Serializer):
+        foo: int
+
+    fs = FieldSerializer()
+    fs.defined_fields['foo'].__class__ is cereal.Field
+
+
 def test_constant_field():
 
     value = 'bar'

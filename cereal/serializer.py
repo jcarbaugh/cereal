@@ -20,6 +20,11 @@ class SerializerMetaclass(type):
         defined_fields = []
         model_fields = []
 
+        if '__annotations__' in attrs:
+            for k, v in attrs['__annotations__'].items():
+                if k not in attrs:
+                    defined_fields.append((k, Field()))
+
         for k, v in list(attrs.items()):
             if isinstance(v, Field):
                 defined_fields.append((k, v))
@@ -31,7 +36,8 @@ class SerializerMetaclass(type):
             if model_class:
                 for field in model_class._meta.fields:
                     name = field.name
-                    if name not in exclude_fields and name not in defined_fields:
+                    if name not in exclude_fields and \
+                            name not in defined_fields:
                         model_fields.append(name)
 
         attrs['exclude_fields'] = exclude_fields
