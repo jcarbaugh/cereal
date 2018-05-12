@@ -4,7 +4,7 @@ from .utils import get_attribute_or_key
 __all__ = ['Field', 'ConstantField', 'IteratorField', 'SerializerField']
 
 
-class Field():
+class Field:
     """ The base field for all other fields.
         Acts as a pass-through to the underlying object or dict.
     """

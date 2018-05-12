@@ -53,7 +53,7 @@ class SerializerMetaclass(type):
         return OrderedDict()
 
 
-class BaseSerializer():
+class BaseSerializer:
 
     def __init__(self, *args, **kwargs):
 
