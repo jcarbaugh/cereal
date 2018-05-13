@@ -41,8 +41,8 @@ class IteratorField(Field):
         Once the iterator has been exhausted, this field will return None.
     """
 
-    def __init__(self, container: Iterator[Any]) -> None:
-        self._iter: Union[Iterator[Any], None] = iter(container)
+    def __init__(self, container):
+        self._iter = iter(container)
 
     def value(self, obj, name: str):
         """ Return next value from the iterator
