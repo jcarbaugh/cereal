@@ -2,7 +2,7 @@ import datetime
 import json
 import logging
 from collections import OrderedDict
-from typing import Callable, List
+from typing import Any, Callable, List
 
 from .fields import Field
 from .utils import get_attribute_or_key
@@ -131,7 +131,7 @@ class BaseSerializer:
 
         return data
 
-    def serialize(self, obj):
+    def serialize(self, obj: Any) -> str:
         data = self.asdict_(obj)
         return json.dumps(data)
 

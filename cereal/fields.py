@@ -41,7 +41,7 @@ class IteratorField(Field):
         Once the iterator has been exhausted, this field will return None.
     """
 
-    def __init__(self, container):
+    def __init__(self, container) -> None:
         self._iter = iter(container)
 
     def value(self, obj: Any, name: str):
