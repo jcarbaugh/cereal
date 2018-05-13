@@ -2,6 +2,7 @@ import datetime
 import json
 import logging
 from collections import OrderedDict
+from typing import Callable, Dict, List
 
 from .fields import Field
 from .utils import get_attribute_or_key
@@ -49,7 +50,7 @@ class SerializerMetaclass(type):
         return cls
 
     @classmethod
-    def __prepare__(metacls, name, bases, **kwds):
+    def __prepare__(metacls, name: str, bases: List, **kwds):
         return OrderedDict()
 
 
@@ -81,13 +82,13 @@ class BaseSerializer:
         else:
             return '{}'.format(value)
 
-    def _serializer_method(self, name):
+    def _serializer_method(self, name: str):
         return 'serialize_{}'.format(name)
 
-    def add_handler(self, _type, handler):
+    def add_handler(self, type_: str, handler: Callable):
         if not callable(handler):
             raise ValueError('handler must be callable')
-        self.handlers[_type] = handler
+        self.handlers[type_] = handler
 
     def asdict_(self, obj):
 

@@ -1,5 +1,5 @@
 from .utils import get_attribute_or_key
-
+from typing import Any, Callable, Iterator, Union
 
 __all__ = ['Field', 'ConstantField', 'IteratorField', 'SerializerField']
 
@@ -18,16 +18,16 @@ class ConstantField(Field):
     def __init__(self, value):
         self._value = value
 
-    def value(self, obj, name):
+    def value(self, obj, name: str):
         return self._value
 
 
 class SerializerField(Field):
 
-    def __init__(self, serializer):
+    def __init__(self, serializer: Callable) -> None:
         self._serializer = serializer()
 
-    def value(self, obj, name):
+    def value(self, obj, name: str):
         other = get_attribute_or_key(obj, name)
         if isinstance(other, (list, tuple, set)):
             return [self._serializer.asdict_(o) for o in other]
@@ -41,10 +41,10 @@ class IteratorField(Field):
         Once the iterator has been exhausted, this field will return None.
     """
 
-    def __init__(self, container):
-        self._iter = iter(container)
+    def __init__(self, container: Iterator[Any]) -> None:
+        self._iter: Union[Iterator[Any], None] = iter(container)
 
-    def value(self, obj, name):
+    def value(self, obj, name: str):
         """ Return next value from the iterator
             or None if StopIteration has occured.
         """
