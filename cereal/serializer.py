@@ -2,7 +2,7 @@ import datetime
 import json
 import logging
 from collections import OrderedDict
-from typing import Callable, Dict, List
+from typing import Callable, List
 
 from .fields import Field
 from .utils import get_attribute_or_key
