@@ -3,7 +3,7 @@ from setuptools import setup
 long_description = open('README.md').read()
 
 setup(
-    name="cereal",
+    name="pycereal",
     version='1.0',
     packages=["cereal"],
     include_package_data=True,

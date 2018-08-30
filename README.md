@@ -10,16 +10,16 @@ I occasionally need to make very small APIs, maybe just an endpoint or two to pr
 
 ## Installation
 
-Cereal is available on [PyPI](https://pypi.org/project/cereal):
+Cereal is available on [PyPI](https://pypi.org/project/pycereal):
 
 ```shell
-pip install cereal
+pip install pycereal
 ```
 
 or
 
 ```shell
-pipenv install cereal
+pipenv install pycereal
 ```
 
 
