@@ -3,7 +3,7 @@ import json
 import logging
 from collections import OrderedDict
 
-from .fields import Field
+from .fields import BaseField, Field
 from .utils import get_attribute_or_key
 
 __all__ = ['Serializer']
@@ -26,7 +26,7 @@ class SerializerMetaclass(type):
                     defined_fields.append((k, Field()))
 
         for k, v in list(attrs.items()):
-            if isinstance(v, Field):
+            if isinstance(v, BaseField):
                 defined_fields.append((k, v))
                 attrs.pop(k)
 
@@ -99,7 +99,6 @@ class BaseSerializer:
                 2. field value() method
                 3. object attribute / dict value
             """
-
             method_name = self._serializer_method(name)
             value = None
 
@@ -108,7 +107,9 @@ class BaseSerializer:
             elif hasattr(field, 'value'):
                 value = getattr(field, 'value')(obj, name)
             else:
-                value = get_attribute_or_key(obj, name)
+                if hasattr(field, 'from_attr'):
+                    attr_name = field.from_attr or name
+                value = get_attribute_or_key(obj, attr_name)
 
             data[name] = self._serialize_value(value)
 
