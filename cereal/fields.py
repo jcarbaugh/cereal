@@ -1,17 +1,23 @@
 from .utils import get_attribute_or_key
 
 
-__all__ = ['Field', 'ConstantField', 'IteratorField', 'SerializerField']
+__all__ = ['BaseField', 'Field', 'ConstantField',
+           'IteratorField', 'SerializerField']
 
 
-class Field:
+class BaseField:
     """ The base field for all other fields.
         Acts as a pass-through to the underlying object or dict.
     """
     pass
 
 
-class ConstantField(Field):
+class Field(BaseField):
+    def __init__(self, from_attr=None):
+        self.from_attr = from_attr
+
+
+class ConstantField(BaseField):
     """ Returns a constant value each time the field is evaluated.
     """
 
@@ -22,7 +28,7 @@ class ConstantField(Field):
         return self._value
 
 
-class SerializerField(Field):
+class SerializerField(BaseField):
 
     def __init__(self, serializer):
         self._serializer = serializer()
@@ -36,7 +42,7 @@ class SerializerField(Field):
         return self._serializer.asdict_(other)
 
 
-class IteratorField(Field):
+class IteratorField(BaseField):
     """ Returns next value from iterator until StopIteration occurs.
         Once the iterator has been exhausted, this field will return None.
     """

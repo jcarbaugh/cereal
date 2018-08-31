@@ -13,6 +13,17 @@ def test_field():
     assert data['foo'] is None
 
 
+def test_field_from_attr():
+
+    class FieldSerializer(cereal.Serializer):
+        bar = cereal.Field(from_attr='foo')
+
+    data = FieldSerializer().asdict_({
+        'foo': 'cereal',
+    })
+    assert data['bar'] == 'cereal'
+
+
 # @pytest.mark.skipif(sys.version_info < (3, 6),
 #                     reason="requires python3.6")
 # def test_annotated_field():
