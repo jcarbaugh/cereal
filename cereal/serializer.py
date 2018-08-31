@@ -131,9 +131,21 @@ class BaseSerializer:
 
         return data
 
-    def serialize(self, obj):
-        data = self.asdict_(obj)
-        return json.dumps(data)
+    def serialize(self, obj, raw=False):
+
+        data = None
+
+        if isinstance(obj, (list, tuple)):
+            data = []
+            for o in obj:
+                data.append(self.asdict_(o))
+        else:
+            data = self.asdict_(obj)
+
+        if not raw:
+            data = json.dumps(data)
+
+        return data
 
 
 class Serializer(BaseSerializer, metaclass=SerializerMetaclass):

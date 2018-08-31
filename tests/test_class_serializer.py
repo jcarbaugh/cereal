@@ -1,5 +1,6 @@
 import datetime
 import logging
+import random
 
 import pytest
 
@@ -10,9 +11,9 @@ logger = logging.getLogger('cereal.tests')
 
 
 @pytest.fixture
-def instance():
+def instance(id_=None):
     obj = JustAClass()
-    obj.id = 3
+    obj.id = id_ or random.randint(1, 1024)
     obj.title = 'A Title'
     obj.content = 'jk not a post'
     obj.created = datetime.datetime.now()
@@ -20,9 +21,9 @@ def instance():
 
 
 class ClassSerializer(cereal.Serializer):
-    exclude = ('id',)
+    exclude = ('content',)
+    id = cereal.Field()
     title = cereal.Field()
-    content = cereal.Field()
     created = cereal.Field()
 
     def serialize_title(self, obj):
@@ -35,7 +36,7 @@ class JustAClass():
 
 def test_exclude(instance):
     data = ClassSerializer().asdict_(instance)
-    assert 'id' not in data
+    assert 'content' not in data
 
 
 def test_serializer_method(instance):
@@ -48,3 +49,11 @@ def test_datetime(instance):
     instance.created = dt
     data = ClassSerializer().asdict_(instance)
     assert dt.isoformat() == data['created']
+
+
+def test_serialize_list():
+    obj1 = instance(1)
+    obj2 = instance(2)
+    data = ClassSerializer().serialize([obj1, obj2], raw=True)
+    assert data[0]['id'] == obj1.id
+    assert data[1]['id'] == obj2.id
