@@ -196,6 +196,32 @@ EventSerializer().serialize(data)
 }
 ```
 
+### Renaming Fields
+
+Sometimes all you want to do is rename a field, not change the value. The Field object takes an optional `from_attr` parameter that can override the attribute from which the value is obtained.
+
+```python
+import cereal
+
+class Author:
+    def __init__(self, first_name):
+        self.first_name = first_name
+
+class AuthorSerializer(cereal.Serializer):
+    firstName = cereal.Field(from_attr='first_name')
+
+obj = Author('Scarlett')
+AuthorSerializer().serialize(obj)
+```
+
+The resulting JSON shouldn't be much of a surprise.
+
+```json
+{
+    "firstName": "Scarlett"
+}
+```
+
 ### Custom type handlers
 
 As with dates, other data types outside of what is natively supported by JSON need to be converted to one of the native types during serialization. Cereal allows you to define handlers for additional data types to convert to a valid JSON format. The handler is a callable that receives the value and returns a value corresponding to a native JSON type.
@@ -227,6 +253,16 @@ You guessed it, the JSON:
 
 When serializing an attribute, the content can either be a single value or an array of values. The corresponding JSON will likewise be either a single value or an array of values. All of the values of the array will be transformed the same way an individual value would be, either through the default Field behavior, using the custom serialization method, the default SerializerField behavior, or a custom type handler. To be safe, just make sure all items in the array are of the same type and that type would serialize correctly as a single value.
 
+Similarly passing a list or tuple of objects to the serializer will return the serialized versions of them as a JSON array. All of the objects must be of the same type (or work with the serializer).
+
+
+### Serialize to a dict instead of JSON
+
+Cereal first converts an object to a dict before converting to JSON. If you would like this dict instead of a string of JSON, pass `raw=True` to the serializer.
+
+```python
+serializer.serialize(obj, raw=True)
+```
 
 
 ## Special Fields
