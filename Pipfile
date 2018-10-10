@@ -10,7 +10,7 @@ name = "pypi"
 
 [dev-packages]
 
-Django = "<2.1"
+Django = "<2.1.2"
 pytest = "*"
 pytest-django = "*"
 pytest-mock = "*"
