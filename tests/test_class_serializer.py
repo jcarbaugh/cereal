@@ -11,7 +11,11 @@ logger = logging.getLogger('cereal.tests')
 
 
 @pytest.fixture
-def instance(id_=None):
+def instance():
+    return new_instance()
+
+
+def new_instance(id_=None):
     obj = JustAClass()
     obj.id = id_ or random.randint(1, 1024)
     obj.title = 'A Title'
@@ -28,6 +32,16 @@ class ClassSerializer(cereal.Serializer):
 
     def serialize_title(self, obj):
         return obj.title.upper()
+
+
+class DerivedClassSerializer(ClassSerializer):
+    exclude = ('id',)
+    content = cereal.Field()
+    updated = cereal.Field()
+
+
+class ClonedClassSerializer(ClassSerializer):
+    pass
 
 
 class JustAClass():
@@ -52,8 +66,28 @@ def test_datetime(instance):
 
 
 def test_serialize_list():
-    obj1 = instance(1)
-    obj2 = instance(2)
+    obj1 = new_instance(1)
+    obj2 = new_instance(2)
     data = ClassSerializer().serialize([obj1, obj2], raw=True)
     assert data[0]['id'] == obj1.id
     assert data[1]['id'] == obj2.id
+
+
+def test_serializer_inheritance(instance):
+    dt = datetime.datetime.now()
+    instance.updated = dt
+    data = DerivedClassSerializer().asdict_(instance)
+    assert 'A TITLE' == data['title']
+    assert 'jk not a post' == data['content']
+    assert dt.isoformat() == data['updated']
+
+
+def test_inheritance_override_exclude(instance):
+    data = DerivedClassSerializer().asdict_(instance)
+    assert 'id' not in data
+
+
+def test_inheritance_exclude_from_parent(instance):
+    data = ClonedClassSerializer().asdict_(instance)
+    assert 'content' not in data
+
