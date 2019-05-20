@@ -334,8 +334,6 @@ class Post(models.Model):
     title = models.CharField(max_length=128)
 
 class PostSerializer(cereal.Serializer):
-    exclude = ('id',)
-
     class Meta:
         model = Post
 
@@ -349,7 +347,14 @@ PostSerializer().serialize(post)
 }
 ```
 
-In this example, we're inheriting the fields of the Post model, but excluding the *id*.
+In this example, we're inheriting the fields of the Post model, but *id* is excluded by default. To include the primary key field, it must be explicitly defined:
+
+```python
+class PostSerializer(cereal.Serializer):
+    id = cereal.Field()
+    class Meta:
+        model = Post
+```
 
 Beyond incorporating the fields from the model, the Serializer functions the same as any other non-model Serializer. You can define additional Fields and custom field serializer methods that modify both model fields and any others.
 

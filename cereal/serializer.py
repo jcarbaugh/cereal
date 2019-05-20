@@ -15,7 +15,7 @@ logger = logging.getLogger('cereal')
 class SerializerMetaclass(type):
 
     def __new__(celf, name, bases, attrs):
-        exclude_fields = attrs.pop('exclude', ())
+        exclude_fields = list(attrs.pop('exclude', []))
         defined_fields = []
         model_fields = []
         _meta = None
@@ -44,8 +44,14 @@ class SerializerMetaclass(type):
 
         meta_cls = attrs.get('Meta', _meta)
         if meta_cls:
+
             model_class = getattr(meta_cls, 'model', None)
             if model_class:
+
+                pk_name = model_class._meta.pk.name
+                if pk_name not in defined_fields:
+                    exclude_fields.append(pk_name)
+
                 for field in model_class._meta.fields:
                     name = field.name
                     if name not in exclude_fields and \

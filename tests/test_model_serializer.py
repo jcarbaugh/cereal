@@ -16,7 +16,6 @@ def post():
 
 
 class PostSerializer(cereal.Serializer):
-    exclude = ('id',)
     a_dict = cereal.Field()
     a_list = cereal.Field()
 
@@ -27,7 +26,12 @@ class PostSerializer(cereal.Serializer):
         return obj.title.upper()
 
 
+class PostSerializerWithID(PostSerializer):
+    id = cereal.Field()
+
+
 class RestrictedPostSerializer(PostSerializer):
+    id = cereal.Field()
     exclude = ('content',)
 
     class Meta:
@@ -38,9 +42,14 @@ class ClonedPostSerializer(PostSerializer):
     pass
 
 
-def test_exclude(post):
+def test_exclude_id(post):
     data = PostSerializer().asdict_(post)
     assert 'id' not in data
+
+
+def test_include_id(post):
+    data = PostSerializerWithID().asdict_(post)
+    assert 'id' in data
 
 
 def test_serializer_method(post):
