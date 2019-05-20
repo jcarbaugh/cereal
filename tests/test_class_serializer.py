@@ -90,4 +90,3 @@ def test_inheritance_override_exclude(instance):
 def test_inheritance_exclude_from_parent(instance):
     data = ClonedClassSerializer().asdict_(instance)
     assert 'content' not in data
-
