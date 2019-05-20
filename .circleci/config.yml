@@ -15,11 +15,15 @@ jobs:
   "python-3.5":
     <<: *shared
     docker:
-      - image: circleci/python:3.5.5
+      - image: circleci/python:3.5.7
   "python-3.6":
     <<: *shared
     docker:
-      - image: circleci/python:3.6.4
+      - image: circleci/python:3.6.8
+  "python-3.7":
+    <<: *shared
+    docker:
+      - image: circleci/python:3.7.3
 
 workflows:
   version: 2
@@ -27,3 +31,4 @@ workflows:
     jobs:
       - "python-3.5"
       - "python-3.6"
+      - "python-3.7"
