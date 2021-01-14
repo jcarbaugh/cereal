@@ -1,6 +1,6 @@
 # Cereal
 
-[![CircleCI](https://circleci.com/gh/istrategylabs/cereal.svg?style=svg)](https://circleci.com/gh/istrategylabs/cereal)
+[![CircleCI](https://circleci.com/gh/jcarbaugh/cereal.svg?style=svg)](https://circleci.com/gh/jcarbaugh/cereal)
 
 Serialize objects, dicts, and [Django models](https://djangoproject.com)  to JSON with ease.
 
