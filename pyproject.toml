@@ -1,0 +1,32 @@
+[project]
+# PEP 621 project metadata
+# See https://www.python.org/dev/peps/pep-0621/
+name = "cereal"
+description = "Serialize Python objects, dicts, and Django models to JSON with ease"
+dynamic = ["version"]
+
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "tests.testapp.settings"
+pythonpath = [
+  "src/"
+]
+testpaths = [
+    "tests/",
+]
+
+[tool.tox]
+legacy_tox_ini = """
+    [tox]
+    envlist =
+        dj{32,41,42}
+
+    [testenv]
+    commands = pytest tests
+    deps =
+        dj32: Django>=3.2,<3.3
+        dj41: Django>=4.1,<4.2
+        dj42: Django>=4.2,<4.3
+        pytest-django
+        tox-pipenv
+"""

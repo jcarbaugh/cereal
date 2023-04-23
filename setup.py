@@ -1,17 +1,18 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
-long_description = open('README.md').read()
+long_description = open("README.md").read()
 
 setup(
     name="pycereal",
-    version='1.1',
-    packages=["cereal"],
+    version="1.1",
+    packages=find_packages(where="src"),
+    package_dir={"": "src"},
     include_package_data=True,
     description="A simple object and Django model JSON serializer",
     url="https://github.com/istrategylabs/cereal",
     author="Jeremy Carbaugh",
     author_email="jeremy@isl.co",
-    license='BSD',
+    license="BSD",
     long_description=long_description,
     long_description_content_type="text/markdown",
     platforms=["any"],
