@@ -1,6 +1,6 @@
 # Cereal
 
-[![CircleCI](https://circleci.com/gh/jcarbaugh/cereal.svg?style=svg)](https://circleci.com/gh/jcarbaugh/cereal)
+[![Python package](https://github.com/jcarbaugh/cereal/actions/workflows/pythonpackage.yml/badge.svg)](https://github.com/jcarbaugh/cereal/actions/workflows/pythonpackage.yml)
 
 Serialize objects, dicts, and [Django models](https://djangoproject.com)  to JSON with ease.
 
